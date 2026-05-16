@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenbit Family Portugal Trip 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#0A2240; --blue:#1A4F8A; --gold:#C9963A; --gold-light:#E8B85A;
+  --terracotta:#C05A2A; --cream:#FBF6EE; --sage:#6B9E78;
+  --dark:#111827; --muted:#6B7280; --border:#E5DDD0;
+}
+body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--dark); min-height:100vh; }
+.page { display:none; }
+.page.active { display:block; }
+
+nav {
+  background:var(--navy); padding:14px 32px;
+  display:flex; justify-content:space-between; align-items:center;
+  position:sticky; top:0; z-index:200;
+  box-shadow:0 2px 24px rgba(10,34,64,0.5);
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; color:var(--gold); font-size:1.3rem; font-weight:600; }
+.nav-logo span { color:white; font-style:italic; }
+.nav-tabs { display:flex; gap:6px; }
+.nav-tab {
+  padding:8px 22px; border-radius:100px; font-size:0.8rem; font-weight:600;
+  letter-spacing:0.8px; text-transform:uppercase; cursor:pointer;
+  border:2px solid transparent; transition:all 0.2s; font-family:'Outfit',sans-serif;
+}
+.nav-tab.active { background:var(--gold); color:var(--navy); }
+.nav-tab:not(.active) { color:rgba(255,255,255,0.55); border-color:rgba(255,255,255,0.15); }
+.nav-tab:not(.active):hover { color:var(--gold); border-color:var(--gold); }
+
+.hero {
+  background:linear-gradient(150deg,var(--navy) 0%,#0d3060 55%,#143d6b 100%);
+  padding:64px 32px 72px; text-align:center; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(circle at 20% 50%,rgba(201,150,58,0.08) 0%,transparent 50%),
+    radial-gradient(circle at 80% 20%,rgba(201,150,58,0.06) 0%,transparent 40%),
+    repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(255,255,255,0.015) 30px,rgba(255,255,255,0.015) 31px);
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(201,150,58,0.12); border:1px solid rgba(201,150,58,0.3);
+  color:var(--gold-light); padding:5px 16px; border-radius:100px;
+  font-size:0.72rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:22px; position:relative;
+}
+.hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,5vw,4.2rem); font-weight:700; color:white; line-height:1.1; margin-bottom:18px; position:relative; }
+.hero h1 em { color:var(--gold); font-style:italic; }
+.hero-sub { color:rgba(255,255,255,0.65); font-size:1rem; max-width:520px; margin:0 auto 36px; line-height:1.75; position:relative; }
+.hero-chips { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; position:relative; }
+.hero-chip { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.8); padding:8px 18px; border-radius:8px; font-size:0.83rem; display:flex; align-items:center; gap:7px; }
+
+.form-wrap { max-width:1100px; margin:0 auto; padding:52px 24px 80px; }
+.form-intro { text-align:center; margin-bottom:48px; }
+.form-intro .eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--terracotta); margin-bottom:10px; }
+.form-intro h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:700; color:var(--navy); margin-bottom:10px; }
+.form-intro p { color:var(--muted); font-size:0.93rem; line-height:1.7; }
+
+.persons-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:22px; margin-bottom:44px; }
+.person-card { background:white; border-radius:18px; overflow:hidden; border:2px solid var(--border); transition:border-color 0.2s,box-shadow 0.2s; }
+.person-card:hover { border-color:var(--blue); box-shadow:0 6px 28px rgba(26,79,138,0.1); }
+.card-top { padding:20px 22px 16px; display:flex; align-items:center; gap:14px; border-bottom:1px solid #F3EDE4; }
+.avatar { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+.av-tenbit { background:linear-gradient(135deg,#0A2240,#1A4F8A); }
+.av-abby   { background:linear-gradient(135deg,#8B1A5C,#C0358E); }
+.av-lucas  { background:linear-gradient(135deg,#1A5C2A,#2E8B57); }
+.av-nate   { background:linear-gradient(135deg,#5C1A5A,#8B2E86); }
+.av-leah   { background:linear-gradient(135deg,#C9963A,#E8B85A); }
+.person-name { font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:700; color:var(--navy); }
+.person-role { font-size:0.75rem; color:var(--muted); font-weight:500; }
+.allergy-badge { margin-left:auto; background:#FFF3E0; border:1px solid #FFCC80; color:#E65100; font-size:0.65rem; font-weight:700; padding:3px 8px; border-radius:6px; white-space:nowrap; }
+.card-body { padding:18px 22px 22px; }
+.cat-section { margin-bottom:16px; }
+.cat-section:last-child { margin-bottom:0; }
+.cat-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.8px; color:#B0A090; margin-bottom:9px; }
+.chips { display:flex; flex-wrap:wrap; gap:7px; }
+.chip { padding:5px 13px; border-radius:100px; font-size:0.78rem; font-weight:500; cursor:pointer; border:1.5px solid #DDD5C8; background:transparent; color:#555; transition:all 0.18s; user-select:none; font-family:'Outfit',sans-serif; }
+.chip:hover { border-color:var(--blue); color:var(--blue); background:rgba(26,79,138,0.05); }
+.chip.on { background:var(--navy); border-color:var(--navy); color:white; }
+
+.freetext-section { margin-top:16px; padding-top:14px; border-top:1px dashed #EDE8E0; }
+.freetext-section label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.8px; color:#B0A090; display:block; margin-bottom:8px; }
+.freetext-section input {
+  width:100%; padding:9px 13px; border:1.5px solid #DDD5C8; border-radius:10px;
+  font-family:'Outfit',sans-serif; font-size:0.82rem; color:var(--dark);
+  background:#FAFAF8; outline:none; transition:border-color 0.2s;
+}
+.freetext-section input:focus { border-color:var(--blue); background:white; }
+.freetext-section input::placeholder { color:#BBAC99; }
+
+.trip-settings { background:white; border-radius:18px; padding:32px; border:2px solid var(--border); margin-bottom:44px; }
+.trip-settings h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:6px; }
+.trip-settings .hint { color:var(--muted); font-size:0.85rem; margin-bottom:22px; }
+.settings-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+.sf { display:flex; flex-direction:column; gap:7px; }
+.sf label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); }
+.sf select { padding:11px 14px; border:1.5px solid #DDD5C8; border-radius:10px; font-family:'Outfit',sans-serif; font-size:0.88rem; color:var(--dark); background:white; outline:none; transition:border-color 0.2s; -webkit-appearance:none; }
+.sf select:focus { border-color:var(--blue); }
+
+.generate-bar { background:linear-gradient(135deg,var(--navy),#0d3060); border-radius:20px; padding:44px 40px; text-align:center; position:relative; overflow:hidden; }
+.generate-bar::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 21px); }
+.generate-bar h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:white; margin-bottom:6px; position:relative; }
+.generate-bar p { color:rgba(255,255,255,0.6); font-size:0.88rem; margin-bottom:26px; position:relative; }
+.btn-gen { position:relative; background:var(--gold); color:var(--navy); border:none; padding:16px 52px; border-radius:100px; font-size:1rem; font-weight:700; font-family:'Outfit',sans-serif; cursor:pointer; transition:all 0.22s; box-shadow:0 4px 24px rgba(201,150,58,0.45); }
+.btn-gen:hover { background:var(--gold-light); transform:translateY(-2px); }
+.btn-gen:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* PAGE 2 */
+.itin-hero { background:linear-gradient(150deg,#1a3a0a 0%,#2a5c12 50%,var(--sage) 100%); padding:56px 32px 64px; text-align:center; position:relative; overflow:hidden; }
+.itin-hero::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(255,255,255,0.02) 28px,rgba(255,255,255,0.02) 29px); }
+.itin-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4.5vw,3.6rem); color:white; font-weight:700; position:relative; margin-bottom:10px; }
+.itin-hero h1 em { color:#B8E0A8; font-style:italic; }
+.itin-hero p { color:rgba(255,255,255,0.72); font-size:0.95rem; position:relative; }
+
+.itin-summary { background:white; border-bottom:1px solid #EDE8E0; padding:18px 40px; display:flex; gap:36px; flex-wrap:wrap; }
+.isum { display:flex; flex-direction:column; gap:2px; flex-shrink:0; }
+.isum .l { font-size:0.67rem; text-transform:uppercase; letter-spacing:1.5px; color:#AAA; font-weight:700; }
+.isum .v { font-size:0.95rem; font-weight:700; color:var(--navy); }
+
+.loading-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 40px; text-align:center; }
+.spinner { width:52px; height:52px; border:4px solid #EDE8E0; border-top-color:var(--blue); border-radius:50%; animation:spin 0.85s linear infinite; margin-bottom:28px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading-wrap h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--navy); margin-bottom:8px; }
+.loading-wrap p { color:var(--muted); font-size:0.9rem; max-width:380px; line-height:1.7; }
+.loading-steps { margin-top:24px; display:flex; flex-direction:column; gap:10px; text-align:left; }
+.loading-step { font-size:0.82rem; color:var(--muted); display:flex; align-items:center; gap:10px; opacity:0; animation:fadeUp 0.5s ease forwards; }
+.dot-ind { width:8px; height:8px; border-radius:50%; background:#DDD; flex-shrink:0; transition:background 0.3s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+.itin-body { max-width:880px; margin:0 auto; padding:52px 24px 90px; }
+
+.ai-recommendation { background:linear-gradient(135deg,#EEF6FF,#F0FFF4); border:1px solid #C3DDF5; border-radius:16px; padding:28px 32px; margin-bottom:32px; }
+.ai-recommendation .rec-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.ai-recommendation p { font-size:0.93rem; line-height:1.85; color:#334155; }
+
+.wish-summary { background:linear-gradient(135deg,#F0F7FF,#E8F4F8); border:1px solid #C8DCEA; border-radius:14px; padding:22px 26px; margin-bottom:32px; }
+.wish-summary h4 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:14px; }
+.wish-grid { display:flex; gap:10px; flex-wrap:wrap; }
+.wish-item { background:white; border:1px solid #DDEAF5; border-radius:8px; padding:5px 12px; font-size:0.78rem; color:var(--navy); font-weight:500; display:flex; align-items:center; gap:5px; }
+
+.day-block { background:white; border-radius:16px; border:1px solid var(--border); margin-bottom:18px; overflow:hidden; }
+.day-header { padding:18px 24px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:background 0.15s; }
+.day-header:hover { background:#FAFAF8; }
+.day-num { width:44px; height:44px; border-radius:12px; background:var(--navy); color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.day-meta { flex:1; }
+.day-title { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; color:var(--navy); line-height:1.3; }
+.day-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+.day-tag { font-size:0.68rem; padding:2px 9px; border-radius:100px; font-weight:600; }
+.tag-city   { background:#EEF2FF; color:#3730A3; }
+.tag-beach  { background:#E0F2FE; color:#0369A1; }
+.tag-food   { background:#FEF3C7; color:#92400E; }
+.tag-sport  { background:#F0FDF4; color:#15803D; }
+.tag-travel { background:#FDF2F8; color:#86198F; }
+.tag-photo  { background:#FFF1F2; color:#BE123C; }
+.day-chevron { color:#CCC; font-size:0.85rem; transition:transform 0.25s; flex-shrink:0; }
+.day-header.open .day-chevron { transform:rotate(180deg); }
+.day-content { max-height:0; overflow:hidden; transition:max-height 0.45s ease; }
+.day-content.open { max-height:2000px; }
+.day-content-inner { border-top:1px solid #F3EDE4; padding:20px 24px 24px; }
+.day-text { font-size:0.9rem; line-height:1.85; color:#374151; white-space:pre-wrap; }
+.day-text strong { color:var(--navy); }
+.time-lbl { display:inline-block; background:var(--navy); color:var(--gold); font-size:0.68rem; font-weight:700; padding:3px 10px; border-radius:5px; letter-spacing:0.5px; margin:8px 0 4px; }
+.allergy-note { display:inline-flex; align-items:center; gap:4px; background:#FFF3E0; border:1px solid #FFCC80; color:#B45309; padding:2px 8px; border-radius:6px; font-size:0.72rem; font-weight:600; }
+
+.back-btn { display:inline-flex; align-items:center; gap:8px; background:white; border:2px solid var(--border); color:var(--navy); padding:10px 22px; border-radius:100px; font-size:0.82rem; font-weight:600; font-family:'Outfit',sans-serif; cursor:pointer; margin-bottom:36px; transition:all 0.2s; }
+.back-btn:hover { border-color:var(--navy); background:var(--navy); color:white; }
+.error-box { background:#FFF5F5; border:1px solid #FECACA; border-radius:14px; padding:28px; color:#991B1B; text-align:center; font-size:0.9rem; line-height:1.7; }
+
+@media(max-width:640px){
+  nav{padding:12px 16px;}
+  .hero,.itin-hero{padding:44px 18px 52px;}
+  .form-wrap,.itin-body{padding:36px 16px 60px;}
+  .persons-grid{grid-template-columns:1fr;}
+  .generate-bar{padding:32px 20px;}
+  .itin-summary{padding:16px 18px;gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">✈ <span>Tenbit Family</span> Portugal 2026</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage(1)">① Our Wishes</button>
+    <button class="nav-tab" id="tab2" onclick="showPage(2)">② Our Itinerary</button>
+  </div>
+</nav>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="hero">
+    <div class="hero-eyebrow">✈ California to Portugal — Summer 2026</div>
+    <h1>Tenbit Family<br><em>Portugal Trip 2026</em></h1>
+    <p class="hero-sub">Hey family — I've been planning something special. We're going to Portugal! I put this together so each of you can tell me exactly what you want out of this trip. Pick your favorites below and let's make sure everyone comes home happy. 🇵🇹</p>
+    <div class="hero-chips">
+      <div class="hero-chip">👨‍👩‍👧‍👦 The 5 of Us</div>
+      <div class="hero-chip">☀️ Summer 2026</div>
+      <div class="hero-chip">🛡️ Safe & Amazing</div>
+      <div class="hero-chip">🤖 AI builds our plan</div>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <div class="form-intro">
+      <div class="eyebrow">Dad wants to know 👇</div>
+      <h2>What does each of you want on this trip?</h2>
+      <p>I want this trip to be great for <em>all of us</em> — not just me and Mom. So I need your input! Tap everything that excites you. Don't hold back. The more you pick, the better I can plan this. Once everyone's done, hit the button and let's see what we've got. 🙌</p>
+    </div>
+
+    <div class="persons-grid">
+
+      <!-- TENBIT -->
+      <div class="person-card" data-person="Tenbit">
+        <div class="card-top">
+          <div class="avatar av-tenbit">👨</div>
+          <div><div class="person-name">Tenbit</div><div class="person-role">Dad · Seasoned Traveler ✈️</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-section">
+            <div class="cat-label">🍽 Food & Dining</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Authentic Portuguese cuisine</span>
+              <span class="chip" onclick="tog(this)">Fresh seafood restaurants</span>
+              <span class="chip" onclick="tog(this)">Rooftop terrace dining</span>
+              <span class="chip" onclick="tog(this)">Local wine tasting</span>
+              <span class="chip" onclick="tog(this)">Grilled fish & piri piri</span>
+              <span class="chip" onclick="tog(this)">Fine dining experience</span>
+              <span class="chip" onclick="tog(this)">Hidden local gems</span>
+              <span class="chip" onclick="tog(this)">Food & craft beer spots</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🌍 Culture & City</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Vibrant local neighborhoods</span>
+              <span class="chip" onclick="tog(this)">Fado music evening</span>
+              <span class="chip" onclick="tog(this)">Scenic city viewpoints</span>
+              <span class="chip" onclick="tog(this)">Sunset cocktails with a view</span>
+              <span class="chip" onclick="tog(this)">Exploring coastal villages</span>
+              <span class="chip" onclick="tog(this)">Light city touring</span>
+              <span class="chip" onclick="tog(this)">Day trip to nearby towns</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🏖 Beach & Relax</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Beach days with the family</span>
+              <span class="chip" onclick="tog(this)">Resort pool & lounge time</span>
+              <span class="chip" onclick="tog(this)">Boat tour along the coast</span>
+              <span class="chip" onclick="tog(this)">Relaxed mornings & coffee</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🛍 Shopping</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Artisan ceramics & tiles</span>
+              <span class="chip" onclick="tog(this)">Quality leather goods</span>
+              <span class="chip" onclick="tog(this)">Local markets & antiques</span>
+            </div>
+          </div>
+          <div class="freetext-section">
+            <label>✏️ Anything else, Tenbit?</label>
+            <input type="text" id="extra-Tenbit" placeholder="e.g. I want a Champions League match, a cigar bar, a cooking class…" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ABBY -->
+      <div class="person-card" data-person="Abby">
+        <div class="card-top">
+          <div class="avatar av-abby">👩</div>
+          <div><div class="person-name">Abby</div><div class="person-role">Mom · Seasoned Traveler ✈️</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-section">
+            <div class="cat-label">🍽 Food & Coffee Culture</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Pastel de nata & espresso</span>
+              <span class="chip" onclick="tog(this)">Trendy brunch cafés</span>
+              <span class="chip" onclick="tog(this)">Outdoor terrace restaurants</span>
+              <span class="chip" onclick="tog(this)">Fresh seafood</span>
+              <span class="chip" onclick="tog(this)">Local desserts & sweets</span>
+              <span class="chip" onclick="tog(this)">Wine & sunset experience</span>
+              <span class="chip" onclick="tog(this)">Food market strolls</span>
+              <span class="chip" onclick="tog(this)">Romantic dinner for two</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🏖 Beach & Wellness</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Relaxing beach days</span>
+              <span class="chip" onclick="tog(this)">Beautiful resort pool</span>
+              <span class="chip" onclick="tog(this)">Spa or wellness experience</span>
+              <span class="chip" onclick="tog(this)">Scenic coastal walks</span>
+              <span class="chip" onclick="tog(this)">Swimming in crystal water</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🛍 Shopping</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Boutique fashion shopping</span>
+              <span class="chip" onclick="tog(this)">Handmade jewelry</span>
+              <span class="chip" onclick="tog(this)">Portuguese ceramics & tiles</span>
+              <span class="chip" onclick="tog(this)">Open-air artisan markets</span>
+              <span class="chip" onclick="tog(this)">Local linen & fabric</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">✨ Experiences</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Fado music show</span>
+              <span class="chip" onclick="tog(this)">Scenic miradouros viewpoints</span>
+              <span class="chip" onclick="tog(this)">Colorful tiled streets</span>
+              <span class="chip" onclick="tog(this)">Light sightseeing & culture</span>
+              <span class="chip" onclick="tog(this)">Family dinners out</span>
+            </div>
+          </div>
+          <div class="freetext-section">
+            <label>✏️ Anything else, Abby?</label>
+            <input type="text" id="extra-Abby" placeholder="e.g. A pottery class, whale watching, a rooftop yoga session…" />
+          </div>
+        </div>
+      </div>
+
+      <!-- LUCAS -->
+      <div class="person-card" data-person="Lucas">
+        <div class="card-top">
+          <div class="avatar av-lucas">🧑</div>
+          <div><div class="person-name">Lucas</div><div class="person-role">19 · First Time Abroad 🌍</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-section">
+            <div class="cat-label">🏄 Water Sports</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Jet skiing</span>
+              <span class="chip" onclick="tog(this)">Surfing & surf lessons</span>
+              <span class="chip" onclick="tog(this)">Paddleboarding</span>
+              <span class="chip" onclick="tog(this)">Wakeboarding</span>
+              <span class="chip" onclick="tog(this)">Boat rental</span>
+              <span class="chip" onclick="tog(this)">Swimming in the ocean</span>
+              <span class="chip" onclick="tog(this)">Cliff jumping spots</span>
+              <span class="chip" onclick="tog(this)">Sea caves & grottos by boat</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🛹 Street & Court Sports</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Skateboarding spots & parks</span>
+              <span class="chip" onclick="tog(this)">Outdoor basketball courts</span>
+              <span class="chip" onclick="tog(this)">Street football / soccer</span>
+              <span class="chip" onclick="tog(this)">Beach volleyball</span>
+              <span class="chip" onclick="tog(this)">Outdoor calisthenics parks</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🍔 Food & Fuel</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Big grilled meat meals</span>
+              <span class="chip" onclick="tog(this)">Street food & snacks</span>
+              <span class="chip" onclick="tog(this)">Beach bar burgers & fries</span>
+              <span class="chip" onclick="tog(this)">Local piri piri chicken</span>
+              <span class="chip" onclick="tog(this)">Late night food spots</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🎉 Nightlife & Vibes</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Trendy rooftop bars</span>
+              <span class="chip" onclick="tog(this)">Nightlife & music venues</span>
+              <span class="chip" onclick="tog(this)">Vibrant beach clubs</span>
+              <span class="chip" onclick="tog(this)">Cool hidden local hangouts</span>
+              <span class="chip" onclick="tog(this)">Explore city at night</span>
+            </div>
+          </div>
+          <div class="freetext-section">
+            <label>✏️ Anything else, Lucas?</label>
+            <input type="text" id="extra-Lucas" placeholder="e.g. I want to find a local pickup basketball game, try paragliding…" />
+          </div>
+        </div>
+      </div>
+
+      <!-- NATHANAEL -->
+      <div class="person-card" data-person="Nathanael">
+        <div class="card-top">
+          <div class="avatar av-nate">🧑</div>
+          <div><div class="person-name">Nathanael</div><div class="person-role">17 · First Time Abroad 🌍</div></div>
+          <div class="allergy-badge">⚠ Food Allergy</div>
+        </div>
+        <div class="card-body">
+          <div class="cat-section">
+            <div class="cat-label">🏀 Sports</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Basketball courts</span>
+              <span class="chip" onclick="tog(this)">Outdoor pickup basketball</span>
+              <span class="chip" onclick="tog(this)">Beach football / soccer</span>
+              <span class="chip" onclick="tog(this)">Beach volleyball</span>
+              <span class="chip" onclick="tog(this)">Track & outdoor fitness</span>
+              <span class="chip" onclick="tog(this)">Running along the beach</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🌊 Water Activities</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Jet skiing</span>
+              <span class="chip" onclick="tog(this)">Snorkeling</span>
+              <span class="chip" onclick="tog(this)">Kayaking</span>
+              <span class="chip" onclick="tog(this)">Boat tours & sea caves</span>
+              <span class="chip" onclick="tog(this)">Swimming & ocean diving</span>
+              <span class="chip" onclick="tog(this)">Surfing lessons</span>
+              <span class="chip" onclick="tog(this)">Paddleboarding</span>
+              <span class="chip" onclick="tog(this)">Cliff jumping spots</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🍽 Food (allergy-aware)</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Allergy-friendly restaurants</span>
+              <span class="chip" onclick="tog(this)">Clear ingredient menus</span>
+              <span class="chip" onclick="tog(this)">Grilled meats & fish</span>
+              <span class="chip" onclick="tog(this)">Simple, fresh food</span>
+              <span class="chip" onclick="tog(this)">Safe street food options</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🎉 Hang & Explore</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Chill beach days</span>
+              <span class="chip" onclick="tog(this)">Cool local neighborhoods</span>
+              <span class="chip" onclick="tog(this)">Night walks & city buzz</span>
+              <span class="chip" onclick="tog(this)">Trendy spots to hang out</span>
+            </div>
+          </div>
+          <div class="freetext-section">
+            <label>✏️ Anything else, Nathanael?</label>
+            <input type="text" id="extra-Nathanael" placeholder="e.g. I want to find a gym, watch a soccer match, try local street food…" />
+          </div>
+        </div>
+      </div>
+
+      <!-- LEAH -->
+      <div class="person-card" data-person="Leah">
+        <div class="card-top">
+          <div class="avatar av-leah">👧</div>
+          <div><div class="person-name">Leah</div><div class="person-role">15 · First Time Abroad 🌍</div></div>
+        </div>
+        <div class="card-body">
+          <div class="cat-section">
+            <div class="cat-label">📸 Social Media & Content</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Instagram-famous locations</span>
+              <span class="chip" onclick="tog(this)">TikTok trending spots</span>
+              <span class="chip" onclick="tog(this)">Influencer-popular cafés</span>
+              <span class="chip" onclick="tog(this)">Colorful tiled streets & walls</span>
+              <span class="chip" onclick="tog(this)">Cliffside ocean views</span>
+              <span class="chip" onclick="tog(this)">Golden hour sunset shots</span>
+              <span class="chip" onclick="tog(this)">Unique architecture backdrops</span>
+              <span class="chip" onclick="tog(this)">Hidden gems worth posting</span>
+              <span class="chip" onclick="tog(this)">Aesthetic beach photos</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🏖 Beach & Outdoors</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Most beautiful beaches in Portugal</span>
+              <span class="chip" onclick="tog(this)">Crystal-clear turquoise water</span>
+              <span class="chip" onclick="tog(this)">Algarve sea caves & arches</span>
+              <span class="chip" onclick="tog(this)">Dramatic rock formations</span>
+              <span class="chip" onclick="tog(this)">Cool beach with a vibe</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🛍 Shopping & Style</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Teen fashion boutiques</span>
+              <span class="chip" onclick="tog(this)">Trendy accessories</span>
+              <span class="chip" onclick="tog(this)">Vintage & thrift stores</span>
+              <span class="chip" onclick="tog(this)">Cool souvenir hunting</span>
+              <span class="chip" onclick="tog(this)">Street & night markets</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">🍦 Food & Treats</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Photogenic food & drinks</span>
+              <span class="chip" onclick="tog(this)">Ice cream & gelato</span>
+              <span class="chip" onclick="tog(this)">Cute bakeries & pastries</span>
+              <span class="chip" onclick="tog(this)">Rooftop café with views</span>
+              <span class="chip" onclick="tog(this)">Night market food stalls</span>
+            </div>
+          </div>
+          <div class="cat-section">
+            <div class="cat-label">✨ Must-Do Experiences</div>
+            <div class="chips">
+              <span class="chip" onclick="tog(this)">Sintra fairytale palaces</span>
+              <span class="chip" onclick="tog(this)">Pena Palace photo shoot</span>
+              <span class="chip" onclick="tog(this)">LX Factory Lisbon</span>
+              <span class="chip" onclick="tog(this)">Praia da Marinha beach</span>
+              <span class="chip" onclick="tog(this)">Ponte 25 de Abril viewpoint</span>
+              <span class="chip" onclick="tog(this)">Benagil Cave boat trip</span>
+              <span class="chip" onclick="tog(this)">Places influencers have posted</span>
+            </div>
+          </div>
+          <div class="freetext-section">
+            <label>✏️ Anything else, Leah?</label>
+            <input type="text" id="extra-Leah" placeholder="e.g. I want to find a cute picnic spot, go to a night market, film a reel…" />
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /persons-grid -->
+
+    <div class="trip-settings">
+      <h3>🗓 Trip Preferences</h3>
+      <p class="hint">Final details to dial in your perfect schedule.</p>
+      <div class="settings-grid">
+        <div class="sf">
+          <label>Trip Length</label>
+          <select id="tripLength">
+            <option value="10">10 days</option>
+            <option value="11">11 days</option>
+            <option value="12" selected>12 days</option>
+            <option value="13">13 days</option>
+          </select>
+        </div>
+        <div class="sf">
+          <label>Pace Style</label>
+          <select id="tripPace">
+            <option value="relaxed — chill days with a couple activities, lots of downtime">Relaxed</option>
+            <option value="balanced — mix of activities and downtime, not rushed" selected>Balanced</option>
+            <option value="active — packed days, lots to do">Active & packed</option>
+          </select>
+        </div>
+        <div class="sf">
+          <label>Accommodation</label>
+          <select id="hotelStyle">
+            <option value="resort-style hotels with pools in safe walkable areas where teens can freely explore" selected>Resort with pool & walkable area</option>
+            <option value="boutique hotels in vibrant city-center locations">Boutique city-center hotels</option>
+            <option value="mix of resort and city boutique hotels">Mix of both</option>
+          </select>
+        </div>
+        <div class="sf">
+          <label>Touring</label>
+          <select id="tourPref">
+            <option value="minimal — only 2-3 light optional tours, mostly self-guided" selected>Minimal (2–3 light tours)</option>
+            <option value="moderate — a guided activity every few days">Moderate</option>
+            <option value="no organized tours — fully self-guided">No tours at all</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="generate-bar">
+      <h3>Alright family — let's see what we've got! 🇵🇹</h3>
+      <p>Once everyone has picked their wishes, hit the button below. Our AI will choose the best cities for us and build a full day-by-day plan around what each of you selected.</p>
+      <button class="btn-gen" id="genBtn" onclick="generateItinerary()">✨ Build Our Portugal Itinerary</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="itin-hero">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:5px 16px;border-radius:100px;font-size:0.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative;">🤖 Built By AI · Planned By Dad</div>
+    <h1>The Tenbit Family<br><em>Portugal Plan 2026</em></h1>
+    <p>Here it is, family — your personalized 12-day Portugal trip, built around what each of you picked.</p>
+  </div>
+
+  <div class="itin-summary" id="itinSummary">
+    <div class="isum"><span class="l">Destination</span><span class="v">🇵🇹 Portugal</span></div>
+    <div class="isum"><span class="l">Duration</span><span class="v" id="sumDuration">12 days</span></div>
+    <div class="isum"><span class="l">Travelers</span><span class="v">Tenbit & Abby + 3 kids (first time abroad!)</span></div>
+    <div class="isum"><span class="l">Allergy Note</span><span class="v">⚠ Nathanael — flagged at every meal</span></div>
+  </div>
+
+  <div class="itin-body">
+    <button class="back-btn" onclick="showPage(1)">← Back to Preferences</button>
+
+    <div class="wish-summary" id="wishSummary" style="display:none;">
+      <h4>🎯 Here's what each of you asked for — it's all in here</h4>
+      <div class="wish-grid" id="wishGrid"></div>
+    </div>
+
+    <div class="ai-recommendation" id="aiRecBox" style="display:none;">
+      <div class="rec-label">🤖 AI City Recommendation</div>
+      <p id="aiRecText"></p>
+    </div>
+
+    <div class="loading-wrap" id="loadingWrap">
+      <div class="spinner"></div>
+      <h3>Hang tight, family…</h3>
+      <p>AI is reading everyone's picks and crafting a trip where Leah gets her photos, the boys get their water sports, Mom gets her cafés, and Dad gets his seafood. 😄</p>
+      <div class="loading-steps">
+        <div class="loading-step" style="animation-delay:0.4s"><span class="dot-ind"></span>Reading everyone's preferences…</div>
+        <div class="loading-step" style="animation-delay:1.5s"><span class="dot-ind"></span>Selecting the best cities for your family…</div>
+        <div class="loading-step" style="animation-delay:3s"><span class="dot-ind"></span>Finding beaches, sports & photo spots…</div>
+        <div class="loading-step" style="animation-delay:5s"><span class="dot-ind"></span>Building your day-by-day schedule…</div>
+        <div class="loading-step" style="animation-delay:8s"><span class="dot-ind"></span>Adding allergy-safe restaurant recommendations…</div>
+        <div class="loading-step" style="animation-delay:12s"><span class="dot-ind"></span>Finalizing your itinerary…</div>
+      </div>
+    </div>
+
+    <div id="itinOutput" style="display:none;"></div>
+    <div id="errorBox" style="display:none;" class="error-box"></div>
+  </div>
+</div>
+
+<script>
+function tog(el){el.classList.toggle('on');}
+
+function showPage(n){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n-1));
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',i===n-1));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function collectWishes(){
+  const w={};
+  document.querySelectorAll('.person-card').forEach(c=>{
+    const name=c.dataset.person;
+    const chips=[...c.querySelectorAll('.chip.on')].map(ch=>ch.textContent.trim());
+    const extra=(document.getElementById('extra-'+name)||{}).value?.trim();
+    w[name]={chips, extra: extra||''};
+  });
+  return w;
+}
+
+function renderWishes(wishes){
+  const em={Tenbit:'👨',Abby:'👩',Lucas:'🧑',Nathanael:'🧑',Leah:'👧'};
+  let h='';
+  for(const[n,data] of Object.entries(wishes)){
+    data.chips.slice(0,2).forEach(item=>{
+      h+=`<div class="wish-item">${em[n]||'👤'} <strong>${n}:</strong> ${item}</div>`;
+    });
+    if(data.extra) h+=`<div class="wish-item">${em[n]||'👤'} <strong>${n} added:</strong> ${data.extra}</div>`;
+  }
+  document.getElementById('wishGrid').innerHTML=h||'<div class="wish-item">All preferences noted ✓</div>';
+  document.getElementById('wishSummary').style.display='block';
+}
+
+function toggleDay(hdr){
+  hdr.classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
+}
+
+function getTags(txt){
+  const t=[];
+  if(/lisbon|alfama|belem|sintra|cascais|lx factory|bairro alto|chiado/i.test(txt)) t.push('<span class="day-tag tag-city">📍 Lisbon</span>');
+  if(/faro|algarve|lagos|albufeira|portimão|marinha|benagil|carvoeiro|sagres/i.test(txt)) t.push('<span class="day-tag tag-beach">📍 Algarve</span>');
+  if(/beach|surf|ocean|swim|snorkel|jet ski|kayak|cave|cliff/i.test(txt)) t.push('<span class="day-tag tag-beach">🏖 Beach & Water</span>');
+  if(/basketball|skate|sport|soccer|football|volleyball|workout/i.test(txt)) t.push('<span class="day-tag tag-sport">🏀 Sports</span>');
+  if(/restaurant|food|dinner|lunch|café|cafe|pastel|seafood|eat/i.test(txt)) t.push('<span class="day-tag tag-food">🍽 Food</span>');
+  if(/instagram|photo|tiktok|influencer|aesthetic|picture|shot of the day/i.test(txt)) t.push('<span class="day-tag tag-photo">📸 Photo Spots</span>');
+  if(/fly|depart|arrive|airport|transfer|drive south/i.test(txt)) t.push('<span class="day-tag tag-travel">✈ Travel</span>');
+  return t.slice(0,3).join('');
+}
+
+function fmtBody(raw){
+  return raw
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/__(.*?)__/g,'<strong>$1</strong>')
+    .replace(/^[-•]\s+/gm,'• ')
+    .replace(/\b(Morning):/gi,'<span class="time-lbl">🌅 Morning</span>')
+    .replace(/\b(Afternoon):/gi,'<span class="time-lbl">☀️ Afternoon</span>')
+    .replace(/\b(Evening|Night):/gi,'<span class="time-lbl">🌙 Evening</span>')
+    .replace(/\b(Lunch):/gi,'<span class="time-lbl">🍽 Lunch</span>')
+    .replace(/\b(Dinner):/gi,'<span class="time-lbl">🍷 Dinner</span>')
+    .replace(/\b(Breakfast):/gi,'<span class="time-lbl">☕ Breakfast</span>')
+    .replace(/⚠[^\n]*/g,'<span class="allergy-note">⚠ Confirm allergens for Nathanael</span>');
+}
+
+function buildCards(text){
+  // Separate intro from days
+  const dayRx=/\n(?=\*{0,2}Day\s+\d+)/gi;
+  const chunks=('\n'+text).split(dayRx);
+  let intro='', cards='';
+
+  for(const chunk of chunks){
+    const m=chunk.match(/^\*{0,2}(Day\s+(\d+))\*{0,2}[:\s–\-]*(.*)/i);
+    if(!m){
+      if(chunk.trim()) intro+=chunk.trim();
+      continue;
+    }
+    const num=parseInt(m[2]);
+    const rawTitle=m[3].replace(/\*\*/g,'').trim();
+    const title=rawTitle||`Day ${num}`;
+    const bodyStart=chunk.indexOf('\n');
+    const body=bodyStart>-1?chunk.slice(bodyStart).trim():'';
+    const tags=getTags(chunk);
+    const open=num<=2;
+    cards+=`
+    <div class="day-block">
+      <div class="day-header${open?' open':''}" onclick="toggleDay(this)">
+        <div class="day-num">${num}</div>
+        <div class="day-meta">
+          <div class="day-title">${num===1?'✈ ':''}Day ${num}${title&&title!==`Day ${num}`?' — '+title:''}</div>
+          <div class="day-tags">${tags}</div>
+        </div>
+        <span class="day-chevron">▼</span>
+      </div>
+      <div class="day-content${open?' open':''}">
+        <div class="day-content-inner">
+          <div class="day-text">${fmtBody(body)}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+  return{intro,cards};
+}
+
+async function generateItinerary(){
+  const wishes=collectWishes();
+  const days=document.getElementById('tripLength').value;
+  const pace=document.getElementById('tripPace').value;
+  const hotel=document.getElementById('hotelStyle').value;
+  const tours=document.getElementById('tourPref').value;
+
+  document.getElementById('sumDuration').textContent=days+' days';
+
+  let wishText='';
+  for(const[n,data] of Object.entries(wishes)){
+    const chips=data.chips.length?data.chips.join(', '):'open to anything';
+    const extra=data.extra?`\n    ➕ They also specifically asked for: "${data.extra}"` :'';
+    wishText+=`\n- ${n}: ${chips}${extra}`;
+  }
+
+  const prompt=`You are an expert Portugal travel planner AI. A family of 5 from San Francisco, California has asked you to design their ideal Portugal vacation.
+
+FAMILY MEMBERS:
+- Tenbit (Dad) — experienced international traveler, foodie, enjoys culture, good wine, scenic views, and relaxed resort time
+- Abby (Mom) — experienced international traveler, loves cafés, shopping, beaches, wellness, and family experiences
+- Lucas (19, son) — first time outside the US. Into surfing, jet skiing, skateboarding, wakeboarding, basketball, beach sports, nightlife, and street food
+- Nathanael (17, son) — first time outside the US. Big sports guy: basketball, jet skiing, snorkeling, kayaking, beach football, surfing. HAS A FOOD ALLERGY — you MUST add a ⚠ allergy reminder at every single dinner recommendation throughout the trip
+- Leah (15, daughter) — first time outside the US. Obsessed with Instagram and TikTok. Wants to visit places social media influencers have posted about, iconic photo backdrops, aesthetic cafés, trendy spots, beautiful beaches, and sea caves
+
+THEIR SELECTED WISHES:
+${wishText}
+
+TRIP SETTINGS:
+- Total days: ${days} (Day 1 = arrive Lisbon, Day ${days} = depart from Faro)
+  - Trip year: Summer 2026, departing from San Francisco, California
+- Pace: ${pace}
+- Accommodation: ${hotel}
+- Touring: ${tours}
+
+INSTRUCTIONS:
+
+PART 1 — CITY RECOMMENDATION (write this first, before Day 1):
+Write 3-4 sentences explaining, as if you are the AI speaking directly to this family, WHY you chose Lisbon and the Algarve (Faro area) specifically for them. Reference their actual preferences: beaches for everyone, water sports for the boys, Instagram/TikTok spots for Leah, food and culture for the parents, safety and walkability for the teens. Make it feel smart and personal — NOT generic.
+
+PART 2 — COMPLETE ${days}-DAY ITINERARY:
+You MUST write every single day. Do not stop early. Do not summarize. All ${days} days must be fully written out.
+
+Structure:
+- Days 1–6: Lisbon area. Include a Sintra day trip (Day 3 or 4) for Leah's photos at Pena Palace. Include LX Factory. Include a Fado evening for the parents. Include basketball courts or a skate spot for the boys.
+- Day 7: Travel day — scenic drive from Lisbon to Algarve (Faro/Lagos area). Suggest one stop along the way.
+- Days 8–${parseInt(days)-1}: Algarve / Lagos / Albufeira area. Full beach mode. Include: Benagil Cave boat tour, jet ski rental, snorkeling, Praia da Marinha for Leah's photos, rooftop sunset bar, a night market or outdoor dining.
+- Day ${days}: Easy morning, then transfer to Faro Airport, fly back to SFO.
+
+FORMAT FOR EACH DAY — follow this exactly:
+Day [N]: [Short catchy title]
+Morning: [2-3 sentences of specific activities with real place names]
+Afternoon: [2-3 sentences of specific activities with real place names]
+Evening: [2-3 sentences including a dinner recommendation with real restaurant name + ⚠ Nathanael: confirm allergen menu with staff before ordering]
+
+SPECIAL CALLOUTS (include these naturally in the relevant days):
+- Every 2-3 days, add: 📸 Leah's Shot of the Day: [specific iconic photo spot and why it's trending on social media]
+- For Lucas & Nathanael, name specific surf schools, jet ski operators, or basketball courts where possible
+- For Tenbit & Abby, include 1-2 elevated evening experiences (fado show, rooftop dinner, sunset wine)
+
+PART 3 — FAMILY TIPS (after Day ${days}):
+Write a section called "🇵🇹 Tips For Your Family" with 6 practical tips covering: how to handle Nathanael's food allergy in Portugal, safe teen-walkable areas, best SIM card options from SFO, tipping culture, getting around, and one thing that will surprise the kids about Portugal.
+
+Keep the tone warm, fun, and exciting throughout. These kids are seeing the world for the first time — make it feel special.`;
+
+  showPage(2);
+  renderWishes(wishes);
+  document.getElementById('loadingWrap').style.display='flex';
+  document.getElementById('itinOutput').style.display='none';
+  document.getElementById('errorBox').style.display='none';
+  document.getElementById('aiRecBox').style.display='none';
+  document.getElementById('genBtn').disabled=true;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:4000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error?.message||'API error');
+    const text=data.content?.map(b=>b.text||'').join('\n')||'';
+    const{intro,cards}=buildCards(text);
+
+    if(intro){
+      document.getElementById('aiRecText').innerHTML=intro.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      document.getElementById('aiRecBox').style.display='block';
+    }
+
+    document.getElementById('itinSummary').innerHTML=`
+      <div class="isum"><span class="l">AI Recommended Route</span><span class="v">✈ SFO → Lisbon → Faro → SFO</span></div>
+      <div class="isum"><span class="l">Duration</span><span class="v">${days} days</span></div>
+      <div class="isum"><span class="l">Travelers</span><span class="v">Tenbit, Abby, Lucas, Nathanael & Leah</span></div>
+      <div class="isum"><span class="l">Allergy Note</span><span class="v">⚠ Nathanael flagged at every meal</span></div>`;
+
+    document.getElementById('loadingWrap').style.display='none';
+    const out=document.getElementById('itinOutput');
+    out.innerHTML=cards||`<div class="day-text" style="white-space:pre-wrap">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    out.style.display='block';
+
+  }catch(err){
+    document.getElementById('loadingWrap').style.display='none';
+    document.getElementById('errorBox').innerHTML=`<strong>Something went wrong.</strong><br><small>${err.message}</small>`;
+    document.getElementById('errorBox').style.display='block';
+  }
+  document.getElementById('genBtn').disabled=false;
+}
+</script>
+</body>
+</html>
