@@ -667,13 +667,16 @@ function fmtBody(raw){
     .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
     .replace(/__(.*?)__/g,'<strong>$1</strong>')
     .replace(/^[-•]\s+/gm,'• ')
-    .replace(/\b(Morning):/gi,'<span class="time-lbl">🌅 Morning</span>')
-    .replace(/\b(Afternoon):/gi,'<span class="time-lbl">☀️ Afternoon</span>')
-    .replace(/\b(Evening|Night):/gi,'<span class="time-lbl">🌙 Evening</span>')
-    .replace(/\b(Lunch):/gi,'<span class="time-lbl">🍽 Lunch</span>')
-    .replace(/\b(Dinner):/gi,'<span class="time-lbl">🍷 Dinner</span>')
-    .replace(/\b(Breakfast):/gi,'<span class="time-lbl">☕ Breakfast</span>')
-    .replace(/⚠[^\n]*/g,'<span class="allergy-note">⚠ Confirm allergens for Nathanael</span>');
+    .replace(/\b(Morning):/gi,'<br><span class="time-lbl">🌅 Morning</span><br>')
+    .replace(/\b(Afternoon):/gi,'<br><span class="time-lbl">☀️ Afternoon</span><br>')
+    .replace(/\b(Evening|Night):/gi,'<br><span class="time-lbl">🌙 Evening</span><br>')
+    .replace(/\b(Lunch):/gi,'<br><span class="time-lbl">🍽 Lunch</span><br>')
+    .replace(/\b(Dinner):/gi,'<br><span class="time-lbl">🍷 Dinner</span><br>')
+    .replace(/\b(Breakfast):/gi,'<br><span class="time-lbl">☕ Breakfast</span><br>')
+    .replace(/📸[^\n]*/g,'<br><span style="background:#FFF0F5;border:1px solid #FFB6C1;padding:4px 10px;border-radius:8px;font-size:0.82rem;color:#C0186A;display:inline-block;margin:6px 0;">$&</span><br>')
+    .replace(/⚠[^\n]*/g,'<span class="allergy-note">⚠ Confirm allergens for Nathanael</span>')
+    .replace(/\n{2,}/g,'<br><br>')
+    .replace(/\n/g,'<br>');
 }
 
 function buildCards(text){
@@ -806,14 +809,13 @@ Keep the tone warm, fun, and exciting throughout. These kids are seeing the worl
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
-        max_tokens:4000,
+        max_tokens:8000,
         messages:[{role:'user',content:prompt}]
       })
     });
     const data=await res.json();
     if(!res.ok) throw new Error(data.error?.message||'API error');
     const text=data.content?.map(b=>b.text||'').join('\n')||'';
-    console.log('AI RESPONSE:', text.slice(0,500));
     const{intro,cards}=buildCards(text);
 
     if(intro){
