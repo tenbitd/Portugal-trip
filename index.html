@@ -677,30 +677,42 @@ function fmtBody(raw){
 }
 
 function buildCards(text){
-  // Separate intro from days
-  const dayRx=/\n(?=\*{0,2}Day\s+\d+)/gi;
-  const chunks=('\n'+text).split(dayRx);
+  // Try to find intro text before first day
   let intro='', cards='';
 
-  for(const chunk of chunks){
-    const m=chunk.match(/^\*{0,2}(Day\s+(\d+))\*{0,2}[:\s–\-]*(.*)/i);
-    if(!m){
-      if(chunk.trim()) intro+=chunk.trim();
-      continue;
-    }
-    const num=parseInt(m[2]);
-    const rawTitle=m[3].replace(/\*\*/g,'').trim();
-    const title=rawTitle||`Day ${num}`;
-    const bodyStart=chunk.indexOf('\n');
-    const body=bodyStart>-1?chunk.slice(bodyStart).trim():'';
-    const tags=getTags(chunk);
+  // Match day headers in many possible formats:
+  // "Day 1:", "**Day 1:**", "## Day 1", "DAY 1 -", etc.
+  const dayHeaderRx=/(?:^|\n)\s*(?:\*{0,2}#{0,3}\s*)?(?:Day|DAY)\s+(\d+)\s*[:\-–—*]?\s*\*{0,2}([^\n]*)/g;
+
+  const matches=[...text.matchAll(dayHeaderRx)];
+
+  if(matches.length===0){
+    // No day headers found — just show raw text nicely
+    intro='';
+    const formatted=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    cards=`<div class="day-block"><div class="day-content open"><div class="day-content-inner"><div class="day-text" style="white-space:pre-wrap">${formatted}</div></div></div></div>`;
+    return{intro,cards};
+  }
+
+  // Extract intro (text before first day)
+  intro=text.slice(0,matches[0].index).trim().replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+
+  // Build day cards
+  for(let i=0;i<matches.length;i++){
+    const m=matches[i];
+    const num=parseInt(m[1]);
+    const title=m[2].replace(/\*\*/g,'').replace(/#+/g,'').trim();
+    const start=m.index+m[0].length;
+    const end=i+1<matches.length?matches[i+1].index:text.length;
+    const body=text.slice(start,end).trim();
+    const tags=getTags(body+title);
     const open=num<=2;
     cards+=`
     <div class="day-block">
       <div class="day-header${open?' open':''}" onclick="toggleDay(this)">
         <div class="day-num">${num}</div>
         <div class="day-meta">
-          <div class="day-title">${num===1?'✈ ':''}Day ${num}${title&&title!==`Day ${num}`?' — '+title:''}</div>
+          <div class="day-title">${num===1?'✈ ':''}Day ${num}${title?' — '+title:''}</div>
           <div class="day-tags">${tags}</div>
         </div>
         <span class="day-chevron">▼</span>
